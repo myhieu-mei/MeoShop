@@ -1,0 +1,39 @@
+.sidebar {
+    height: 100px;
+    background-color: azure;
+}
+
+.sidebar:hover {
+    background-color: azure;
+    opacity: 1;
+}
+
+.list-group {
+    width: 200px;
+}
+
+.image {
+    background-image: url('../images/slide1.png');
+}
+
+.grid-container {
+    display: inline-grid;
+    grid-template-columns: auto auto auto;
+}
+
+.grid-item {
+    width: 270px;
+    height: auto;
+    margin: 45px;
+}
+
+.list-tyle li {
+    border: 1px solid grey;
+    width: 200px;
+    height: 40px;
+    padding: 10px 0px 0px 10px;
+}
+
+.list-tyle {
+    list-style-type: none;
+}
