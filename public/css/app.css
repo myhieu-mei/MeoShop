@@ -37,3 +37,9 @@
 .list-tyle {
     list-style-type: none;
 }
+
+.nav1 {
+    background-color: bisque;
+    height: 70px;
+    margin: auto;
+}

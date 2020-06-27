@@ -35,10 +35,11 @@ Route::PATCH('/admin/users/{id}', 'Admin\UsersController@update');
 
 Route::get('/home', 'User\HomeController@index');
 
-Route::get('/auth/login',"Auth\LoginController@index")->name("auth.login");
-
-Route::get('/auth/register',"Auth\RegisterController@addUser")->name("auth.register");
-
+Route::get('/auth/login',"Auth\LoginController@index");
+Route::get('/auth/register',"Auth\RegisterController@addUser");
 Route::post('/auth/login',"Auth\LoginController@login");
-
 Route::post('/auth/register',"Auth\RegisterController@register");
+
+Route::get('/product/cart/{id}', 'User\CartController@addcart');
+Route::get('/user/cart', 'User\CartController@index');
+Route::get('/user/order', 'User\CartController@createOrder');

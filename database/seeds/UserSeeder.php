@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             "name"=>"user",
             "username"=>"user",
-            "password"=>"user",
+            "password"=>Hash::make('user'),
             "birthday"=>"1/1/1",
             "numphone"=>"5258965",
             "role"=>"user"]);
@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
             DB::table('users')->insert([
                 "name"=>" Admin",
                 "username"=>"admin",
-                "password"=>"admin",
+                "password"=>Hash::make('admin'),
                 "birthday"=>"1/1/1",
                 "numphone"=>"025694265",
                 "role"=>"admin"]);

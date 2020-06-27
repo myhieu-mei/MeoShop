@@ -33,7 +33,7 @@
     </div>
     <div style="width:500px; margin: 50px auto auto auto; border: solid 1px; padding: 10px 10px 10px 10px; background-color: #
 EEEEEE;">
-        <form class="form-horizontal" action="/auth/login" method="post">
+        <form class="form-horizontal" action="/auth/login" method="POST">
             @csrf
             <div class="form-group">
                 <label class="control-label col-sm-2">Username:</label>
@@ -70,7 +70,7 @@ EEEEEE;">
                 </ul>
             </div>
             @endif
-           
+          
 
             @error('username')
             <div class="alert alert-danger">{{ $message }}</div>

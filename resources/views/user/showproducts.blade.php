@@ -1,4 +1,5 @@
 @include('partials.header')
+@include('partials.header1')
 <!--  /*====================Products show==========================*/ -->
 <div class="container">
 
@@ -16,9 +17,11 @@
 
             <a style="text-align: center;" href="detail/{{$product->id}}" type="submit" class="btn btn-success"><i
                     class="fas fa-info-circle fa-2x"></i></a>
-            <a style="text-align: center;" href="admin/product/cart/{{$product->id}}" type="submit"
-                class="btn btn-success"> <i class="fas fa-shopping-cart fa-2x"></i></a>
 
+                    @if(Auth::user())
+            <a style="text-align: center; " href="product/cart/{{$product->id}}" type="submit"
+                class="btn btn-success"> <i class="fas fa-shopping-cart fa-2x"></i></a>
+@endif
 
         </div>
     </div>
