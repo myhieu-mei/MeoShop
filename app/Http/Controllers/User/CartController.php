@@ -7,27 +7,35 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use App\Cart;
+use App\Customer;
+use App\Order;
+use App\Product;
+use App\Promotion;
+
+
 class CartController extends Controller
 {
     function index(){
-        $carts=Cart:: all();
+    
         $idUser = Auth::user()->id;
-        $carts = DB::table('carts')->where('user_id','=',$idUser)->get();
-        echo json_encode($carts);
+        $carts = Cart::where('user_id',$idUser)->get();
+
+
          return view("user.cart",["carts" => $carts]);
     }
     
     public function addcart($id){
             $idUser = Auth::user()->id;
-               $cart = DB::table('carts')->where('product_id','=',$id,'and','user_id','=',$idUser);
+               $cart =Cart::where('product_id','=',$id,'and','user_id','=',$idUser)->first();
+               echo json_encode($cart);
                if (!$cart){
                    DB::table('carts')->insert(['quantity' => 1,'product_id'=>$id,'user_id'=>$idUser]);
                }
                else
                {
-                   $quantity = $cart->quantity + 1;
+                   $quantity = $cart->quantity+1;
                    DB::table('carts')->where('product_id','=',$id)->update(['quantity' => $quantity]);
-               }
+                }
          
          return redirect("user/cart");
 
@@ -39,38 +47,47 @@ class CartController extends Controller
     }
 
     function createOrder(){
-        $carts=Cart:: all();
+        $idUser = Auth::user()->id;
+        $carts = Cart::where('user_id',$idUser)->get();
         return view("user.order",["carts" => $carts]);
     }
 
     function order(Request $request){
      
         $cus = new Customer();
-        $cus->name= $request->name;
+        $cus->name= $request->fullname;
         $cus->email=$request->email;
-        $cus->numphone=$request->phone;
+        $cus->phone=$request->numphone;
         $cus->address=$request->address;
-        $cus->address=$request->city;
-        $cus->address=$request->zipcode;
-        $cus->note=$request->notes;
+        $cus->city=$request->city;
+        $cus->zipcode=$request->zip;
+        $cus->notes=$request->note;
         $cus->save();
 
         $bill = new Order();
-        $bill->id_customer= $cus->id;
-        $bill->date_order=date('Y-m-d');
-        $bill->promo_code=$request->promo_code; // kiem tra xem code giam gia cos ton tai trong trong bang promotions k
-        
-
+        $bill->customer_id= $cus->id;
+        $promo= Promotion::where('code',$request->promote_code)->first();
+        if(!$promo){
+            $bill->promo_value = 1;
+        }
+        else {
+            $bill->promo_value=$promo->value;
+        }
+        // kiem tra xem code giam gia cos ton tai trong trong bang promotions k
         $idUser = Auth::user()->id;
-        $carts=Cart::find($idUser);
+        $carts=Cart::where('user_id',$idUser)->get();
         foreach($carts as $item){
             $bill->total+=$item->quantity;
             $pro=Product::find($item->product_id);
             $bill->total_price+=$pro->new_price*$item->quantity;
         }
-        $bill->note=$request->notes;
+        $carts = Cart::where('user_id',$idUser)->get();
+        $products= json_encode($carts);
+        $bill->products=$products;
+        $bill->payment= $request->payment;
         $bill->save();
-        echo "Order thanh cong";
+        DB::table("carts")->where('user_id',$idUser)->delete();
+        return redirect("home");
     }
 
 }

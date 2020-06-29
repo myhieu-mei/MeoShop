@@ -16,11 +16,11 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('customer_id');
-            $table->date('date_order');
+            $table->integer('promo_value');
             $table->integer('total');
-            $table->string('promo_code');
             $table->integer('total_price');
-            $table->string('note');
+            $table->string('products');
+            $table->string('payment');
             $table->timestamps();
         });
     }

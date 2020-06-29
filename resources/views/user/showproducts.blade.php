@@ -2,7 +2,6 @@
 @include('partials.header1')
 <!--  /*====================Products show==========================*/ -->
 <div class="container">
-
     @foreach($products as $product)
 
     <div class="grid-container">
@@ -28,3 +27,6 @@
     @endforeach
 
 </div>
+</div>
+
+@include('partials.footer')

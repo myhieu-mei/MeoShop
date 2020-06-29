@@ -14,8 +14,14 @@ class CategorySeeder extends Seeder
     public function run()
     {
         DB::table('categories')->insert([
-            "name"=>"Thời trang nữ"]);
-            DB::table('categories')->insert([
-                "name"=>"Phụ kiện thời trang"]);
+            "name"=>"Lolita"]);
+        DB::table('categories')->insert([
+            "name"=>"Hanfu"]);
+        DB::table('categories')->insert([
+             "name"=>"Ao dai"]);
+       DB::table('categories')->insert([
+             "name"=>"Cosplay"]);
+         DB::table('categories')->insert([
+             "name"=>"Accessories"]);
     }
 }

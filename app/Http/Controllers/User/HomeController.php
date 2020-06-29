@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\DB;
 class HomeController extends Controller
 {
     function index(){
+        $categories= DB::table("categories")->get();
         $products= DB::table("products")->get();
-        return view("user.showproducts",["products" => $products]);
+        return view("user.showproducts",["products" => $products,"categories" => $categories ]);
     }
 }

@@ -43,3 +43,5 @@ Route::post('/auth/register',"Auth\RegisterController@register");
 Route::get('/product/cart/{id}', 'User\CartController@addcart');
 Route::get('/user/cart', 'User\CartController@index');
 Route::get('/user/order', 'User\CartController@createOrder');
+Route::post('/user/order', 'User\CartController@order');
+

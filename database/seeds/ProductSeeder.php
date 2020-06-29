@@ -18,8 +18,8 @@ class ProductSeeder extends Seeder
                 "title"=>$faker->name,
                 "category_id"=>$faker->numberBetween(1,2),
                 "image"=>"images/demo.png",
-                "old_price"=>$faker->numberBetween(200000,400000),
-                "new_price"=>$faker->numberBetween(200000,400000),
+                "old_price"=>400000,
+                "new_price"=>200000,
                 "description"=>$faker->name,
 
             ]);
