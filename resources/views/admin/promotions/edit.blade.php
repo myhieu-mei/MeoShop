@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Add Product</title>
+    <title>Edit Photo</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,12 +14,13 @@
 
 <body style="height: 100%; width: 90%; margin: auto;">
     <div style="height: 50%; width: 40%; margin: auto;">
-        <h1 style="text-align: center;">Add Product</h1>
-        <form action="/admin/dashboard" method="POST" enctype="multipart/form-data">
+        <h1 style="text-align: center;">Edit Product</h1>
+        <form action="{{'/admin/products/'.$product->id}}" method="POST" enctype="multipart/form-data">
             @csrf
+            @method('PATCH')
             <div class="form-group">
                 <label for="">Title</label>
-                <input type="text" class="form-control" id="" placeholder="Title" name="title">
+                <input type="text" class="form-control" id="" placeholder="Title" name="title" value="{{$product->title}}">
             </div>
             <div class="form-group">
                 <label for="category">Category:</label>
@@ -31,19 +32,20 @@
             </div>
             <div class="form-group">
                 <label for="">Image</label>
-                <input type="file" class="form-control" id="" placeholder="image" name="image">
+                <input type="file" class="form-control" id="" placeholder="image" name="image" value="{{$product->image}}">
             </div>
-            <div class="form-group">
-                <label for="">Description</label>
-                <input type="text" class="form-control" id="" placeholder="description" name="description">
-            </div>
+           
             <div class="form-group">
                 <label for="">Old price</label>
-                <input type="text" class="form-control" id="" placeholder="Old price" name="oldprice">
+                <input type="text" class="form-control" id="" placeholder="Old price" name="oldprice"  value="{{$product->old_price}}">
             </div>
             <div class="form-group">
                 <label for="">New price</label>
-                <input type="text" class="form-control" id="" placeholder="New price" name="newprice">
+                <input type="text" class="form-control" id="" placeholder="New price" name="newprice"  value="{{$product->new_price}}">
+            </div>
+            <div class="form-group">
+                <label for="">Description</label>
+                <input type="text" class="form-control" id="" placeholder="description" name="description" value="{{$product->description}}">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

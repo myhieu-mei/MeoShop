@@ -21,19 +21,15 @@ Route::get('/home', function(){
     return view('home');
 });
 
-Route::get('/admin/products/create', 'Admin\ProductsController@create');
-Route::get('/admin/products', 'Admin\ProductsController@index');
-Route::post('/admin/products', 'Admin\ProductsController@store');
-Route::delete('/admin/products/{id}', 'Admin\ProductsController@destroy');
-Route::get('/admin/products/{id}/edit', 'Admin\ProductsController@edit');
-Route::PATCH('/admin/products/{id}', 'Admin\ProductsController@update');
+// Route::get('/home', 'User\HomeController@index');
+Route::get('/home', 'User\HomeController@product');
 
-Route::get('/admin/users',"Admin\UsersController@index");
-Route::delete('/admin/users/{id}', 'Admin\UsersController@destroy');
-Route::get('/admin/users/{id}/edit', 'Admin\UsersController@edit');
-Route::PATCH('/admin/users/{id}', 'Admin\UsersController@update');
+Route::get('/logout', 'User\HomeController@logout');
+Route::post('/home', 'User\HomeController@sort');
+Route::post('/home', 'User\HomeController@productOfCate');
+Route::post('/home', 'User\HomeController@searchProduct');
 
-Route::get('/home', 'User\HomeController@index');
+Route::get('/product/detail/{id}', 'User\HomeController@detail');
 
 Route::get('/auth/login',"Auth\LoginController@index");
 Route::get('/auth/register',"Auth\RegisterController@addUser");
@@ -42,6 +38,42 @@ Route::post('/auth/register',"Auth\RegisterController@register");
 
 Route::get('/product/cart/{id}', 'User\CartController@addcart');
 Route::get('/user/cart', 'User\CartController@index');
-Route::get('/user/order', 'User\CartController@createOrder');
-Route::post('/user/order', 'User\CartController@order');
+Route::post('/user/cart', 'User\CartController@update');
 
+Route::post('/user/order', 'User\CartController@createOrder');
+Route::get('/user/order', 'User\CartController@createOrder');
+Route::post('/user/order/check', 'User\OrderController@order');
+
+Route::group(['middleware'=>"adminLogin"], function(){
+
+Route::get('/admin/dashboard',"Admin\DashboardController@index");
+
+// USER
+Route::get('/admin/users',"Admin\UsersController@index");
+Route::delete('/admin/users/{id}', 'Admin\UsersController@destroy');
+Route::get('/admin/users/{id}/edit', 'Admin\UsersController@edit');
+Route::PATCH('/admin/users/{id}', 'Admin\UsersController@update');
+
+
+// PRODUCT
+Route::get('/admin/products/create', 'Admin\ProductsController@create');
+Route::get('/admin/products', 'Admin\ProductsController@index');
+Route::post('/admin/products', 'Admin\ProductsController@store');
+Route::delete('/admin/products/{id}', 'Admin\ProductsController@destroy');
+Route::get('/admin/products/{id}/edit', 'Admin\ProductsController@edit');
+Route::PATCH('/admin/products/{id}', 'Admin\ProductsController@update');
+Route::get('/admin/dashboard/order/products/{id}', 'User\OrderController@productOrder');
+
+
+});
+
+//CATEGORY
+
+
+//PROMOTION
+
+
+//ORDER
+
+
+//CUSTOMER

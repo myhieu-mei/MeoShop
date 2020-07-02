@@ -8,43 +8,23 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="/css/app.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <script type="text/javascript">
-    $('#header-search').on('keyup', function() {
-        var search = $(this).serialize();
-        if ($(this).find('.m-input').val() == '') {
-            $('#search-suggest div').hide();
-        } else {
-            $.ajax({
-                    url: '/search',
-                    type: 'POST',
-                    data: search,
-                })
-                .done(function(res) {
-                    $('#search-suggest').html('');
-                    $('#search-suggest').append(res)
-                })
-        };
-    });
-    </script>
 </head>
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 50px;">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
             aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#">MeoMeo</a>
+        <a class="navbar-brand" href="#" style="font-size: 18px;">MeoMeo</a>
 
         <div class="collapse navbar-collapse menu" id="navbarTogglerDemo03">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -63,11 +43,17 @@
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         WOMEN FASHION
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        @foreach($categories as $cate)
-                        <a href="/home/productOfCate/{{$cate->id}}" class="dropdown-item">{{ $cate->name }}</a>
-                        @endforeach
-                    </div>
+                   
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    @foreach($categories as $cate)
+                <form action="/home" method="post">
+                    @csrf
+                    <button class="dropdown-item" type="submit" name="cate" value="{{$cate->id}}">{{$cate->name}}</button>
+                </form>
+                @endforeach
+            </div>
+                 
+
                 </li>
 
 
@@ -79,10 +65,13 @@
                 </li>
 
             </ul>
-            <div style="margin-top: 20px; margin-left: 50px; display: flex;">
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <div style="margin-top: 20px; margin-left: 10px; display: flex; ">
+                <form  action="/home" method="post" class="form-inline my-2 my-lg-0">
+                @csrf
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+                        style="font-size:18px;" name="search_txt">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"
+                        style="font-size:18px;">Search</button>
                 </form>
 
 
@@ -90,24 +79,24 @@
                 <form action="/auth/logout" method="get">
                     @csrf
 
-                    <div class="nav-item dropdown" style="margin-left: 50px; display: flex;">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" >
+                    <div class="nav-item dropdown" style=" display: flex;">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown">
                             <i class="fa fa-user"> </i> {{Auth::user()->name}}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                            <a href="" class="dropdown-item">Logout</a>
+                            <a href="/logout" class="dropdown-item">Logout</a>
 
                         </div>
-                        <a href="/user/cartindex" style="margin-top: 5px;"><i class="fas fa-shopping-cart"></i><span>Giỏ Hàng</span></a>
+                        <a href="/user/cartindex" style="margin-top: 5px;"><i class="fas fa-shopping-cart"></i><span>Giỏ
+                                Hàng</span></a>
                     </div>
                 </form>
 
                 @else
-                <div class="account">
-                    <span> <a href="auth/login"> LOGIN</a> </span> &nbsp;
-                    <span><a href="auth/register">REGISTER </a></span>
+                <div class="account" style="margin-left: 50px; float: right;">
+                    <span> <a href="/auth/login"> LOGIN</a> </span> &nbsp;
+                    <span><a href="/auth/register">REGISTER </a></span>
                     @endif
                 </div>
 

@@ -1,4 +1,4 @@
-<div class="footer">
+<div class="footer" style="margin-top: 100px">
 
 <div class="footer-content">
 <div class="footer-section about">
@@ -45,3 +45,5 @@
 </div>
 
 </div>
+</body>
+</html>

@@ -27,8 +27,6 @@ class UsersController extends Controller
          $role=$request->role;
         $username = DB::table("users")->where("id",$id)->value("username");
         $password = DB::table("users")->where("id",$id)->value("password");
-     
-   
         DB::table("users")->where("id", $id)->update(["id"=>$id,"username"=>$username, "password"=>$password,"role"=>$role]);
        return redirect("admin/users");
 

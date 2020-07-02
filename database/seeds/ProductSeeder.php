@@ -13,7 +13,7 @@ class ProductSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        for($i=0; $i<10; $i++){
+        for($i=0; $i<5; $i++){
             DB::table('products')->insert([
                 "title"=>$faker->name,
                 "category_id"=>$faker->numberBetween(1,2),
@@ -24,5 +24,16 @@ class ProductSeeder extends Seeder
 
             ]);
             }
+            for($i=0; $i<5; $i++){
+                DB::table('products')->insert([
+                    "title"=>$faker->name,
+                    "category_id"=>$faker->numberBetween(1,2),
+                    "image"=>"images/demo.png",
+                    "old_price"=>500000,
+                    "new_price"=>299000,
+                    "description"=>$faker->name,
+    
+                ]);
+                }
     }
 }

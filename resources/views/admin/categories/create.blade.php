@@ -14,37 +14,14 @@
 
 <body style="height: 100%; width: 90%; margin: auto;">
     <div style="height: 50%; width: 40%; margin: auto;">
-        <h1 style="text-align: center;">Add Product</h1>
-        <form action="/admin/dashboard" method="POST" enctype="multipart/form-data">
+        <h1 style="text-align: center;">Add Category</h1>
+        <form action="/admin/photos" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label for="">Title</label>
-                <input type="text" class="form-control" id="" placeholder="Title" name="title">
+                <label for="">Name</label>
+                <input type="text" class="form-control" id="" placeholder="Name Category" name="name">
             </div>
-            <div class="form-group">
-                <label for="category">Category:</label>
-                <select name="category" id="category">
-                    @foreach($categories as $category)
-                    <option label="{{$category->name}}"  value="{{$category->id}}" ></option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="">Image</label>
-                <input type="file" class="form-control" id="" placeholder="image" name="image">
-            </div>
-            <div class="form-group">
-                <label for="">Description</label>
-                <input type="text" class="form-control" id="" placeholder="description" name="description">
-            </div>
-            <div class="form-group">
-                <label for="">Old price</label>
-                <input type="text" class="form-control" id="" placeholder="Old price" name="oldprice">
-            </div>
-            <div class="form-group">
-                <label for="">New price</label>
-                <input type="text" class="form-control" id="" placeholder="New price" name="newprice">
-            </div>
+            
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>

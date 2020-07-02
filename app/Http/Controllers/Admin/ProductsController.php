@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Product;
 use App\Category;
-
+use Illuminate\Http\Request;
+use App\Http\Requests\addProductRequest;
+use App\Http\Requests\loginRequest;
 class ProductsController extends Controller
 {
 
@@ -19,7 +21,7 @@ class ProductsController extends Controller
         $products=Product:: all();
         return view("admin.products.index",["products" => $products]);
     }
-       public function store(Request $request){
+       public function store(addProductRequest $request){
         $request->validate([
             'title' => 'required|max:255',
             'image' => 'required',
@@ -38,12 +40,12 @@ class ProductsController extends Controller
         $product= new Product;
         $product->title= $title;
         $product->category_id= $category_id;
-        $product->image= $image;
+        $product->image= 'storage/'.$image;
         $product->oldprice= $oldprice;
         $product->newprice= $newprice;
         $product->description= $description;
         $product->save(); 
-         return redirect("admin/products");
+         return redirect("admin/dashboard");
 
     }
 
@@ -66,9 +68,9 @@ class ProductsController extends Controller
         $description=$request->description;
 
         DB::table("products")->where("id", $id)->update(
-            ["title" =>  $title,  "image"=> $image, "category_id"=> $category_id]);
+            ["title" =>  $title,  "image"=> 'storage/'.$image, "category_id"=> $category_id]);
     
-         return redirect("admin/products");
+         return redirect("admin/dashboard");
         
     }
 
@@ -78,7 +80,7 @@ class ProductsController extends Controller
        
      
         DB::table("products")->where("id" ,"=", $id)->delete();
-         return redirect("admin/products");
+         return redirect("admin/dashboard");
     }
 
 }

@@ -2,31 +2,48 @@
 @include('partials.header1')
 <!--  /*====================Products show==========================*/ -->
 <div class="container">
+    <div class="drop2" style="display: flex;">
+        <div class="dropdown" style="margin-top: 5px; margin-left: 50px">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <form action="/home" method="post">
+                    @csrf
+                    <input type="text" name="txtSort" value="tang" hidden="hidden">
+                    <button class="dropdown-item" type="submit">Ascending</button>
+                </form>
+                <form action="/home" method="post">
+                    @csrf
+                    <input type="text" name="txtSort" value="giam" hidden="hidden">
+                    <button class="dropdown-item" type="submit">Decrease</button>
+                </form>
+            </div>
+        </div>
+    </div>
     @foreach($products as $product)
 
     <div class="grid-container">
         <div class="grid-item">
-            <div>
-                <img src="{{$product->image}}" style="height:250px; width: 270px; ">
+            <div class="pro-image">
+                <a href="/product/detail/{{$product->id}}"> <img src="{{$product->image}}"
+                        style="height:330px; width: 270px; "></a>
             </div>
-            <div>
-                <p style="text-align: left;"> <a href="/user/show/{{$product->id}}">{{$product->title}}</a></p>
-                <p style="text-align: left;">Giá: {{$product->new_price}} <sub>đ</sub></p>
+            <div class="pro-title" style="font-size:19px;">
+                <p style="text-align: left;"> <a href="/product/detail/{{$product->id}}">{{$product->title}}</a></p>
+                <p style="text-align: left;">Price: {{$product->new_price}} <sub>đ</sub></p>
             </div>
-
-            <a style="text-align: center;" href="detail/{{$product->id}}" type="submit" class="btn btn-success"><i
-                    class="fas fa-info-circle fa-2x"></i></a>
-
-                    @if(Auth::user())
-            <a style="text-align: center; " href="product/cart/{{$product->id}}" type="submit"
-                class="btn btn-success"> <i class="fas fa-shopping-cart fa-2x"></i></a>
-@endif
-
         </div>
     </div>
     @endforeach
 
 </div>
+
+</div>
+<div style="display: flex;justify-content: space-between;">
+
+    <a class="btn btn-success" href="/home?page={{$page-1}}">Previous</a>
+    <a class="btn btn-success" href="/home?page={{$page+1}}">Next</a>
 </div>
 
 @include('partials.footer')

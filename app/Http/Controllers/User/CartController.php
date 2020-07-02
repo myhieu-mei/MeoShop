@@ -5,31 +5,34 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use App\Http\Requests\registerRequest;
 use App\Cart;
 use App\Customer;
 use App\Order;
 use App\Product;
 use App\Promotion;
-
+use App\Category;
 
 class CartController extends Controller
 {
     function index(){
-    
+        $categories= Category::all();
         $idUser = Auth::user()->id;
         $carts = Cart::where('user_id',$idUser)->get();
 
 
-         return view("user.cart",["carts" => $carts]);
+         return view("user.cart",["carts" => $carts, "categories"=>$categories]);
     }
+
+   
     
     public function addcart($id){
+   
+        if(Auth::user()){
             $idUser = Auth::user()->id;
                $cart =Cart::where('product_id','=',$id,'and','user_id','=',$idUser)->first();
-               echo json_encode($cart);
                if (!$cart){
-                   DB::table('carts')->insert(['quantity' => 1,'product_id'=>$id,'user_id'=>$idUser]);
+                Cart::insert(['user_id'=>$idUser,'product_id'=>$id,'quantity' => 1]);
                }
                else
                {
@@ -37,57 +40,54 @@ class CartController extends Controller
                    DB::table('carts')->where('product_id','=',$id)->update(['quantity' => $quantity]);
                 }
          
-         return redirect("user/cart");
+         return redirect("user/cart"); 
+        }
+         else {
+            return redirect()->back()->with('fatal', 'Login to add to cart!');   
+        }
+        
+    }
 
+    function update(Request $request){
+        $product= $request->id;
+        if(Auth::user()){
+            $idUser = Auth::user()->id;
+            $cart =Cart::where('product_id','=',$product,'and','user_id','=',$idUser)->first();
+        }
+            if($request->method== '-')
+            {$quantity = $cart->quantity- 1;}
+            else {
+                $quantity = $cart->quantity+ 1;
+            }
+        if($quantity>0){
+        DB::table('carts')->where('product_id','=',$product)->update(['quantity' =>$quantity]);
+                return redirect("user/cart"); }
+        else {
+            $this->destroy($request->id);
+            return redirect("user/cart");
+        }
+       
     }
     public function destroy($id)
     {
-        DB::table("carts")->where("id" ,"=", $id)->delete();
+        if(Auth::user())
+            $idUser = Auth::user()->id;
+        $cart =Cart::where('product_id','=',$id,'and','user_id','=',$idUser)->delete();
          return redirect("user/cart");
     }
 
-    function createOrder(){
+    function createOrder(Request $request){
+        $categories= Category::all();
         $idUser = Auth::user()->id;
         $carts = Cart::where('user_id',$idUser)->get();
-        return view("user.order",["carts" => $carts]);
+        $promos= Promotion::where('code',$request->coupon_code)->get();
+        return view("user.order",["carts" => $carts,"categories"=>$categories, "promos"=>$promos]);
     }
 
-    function order(Request $request){
-     
-        $cus = new Customer();
-        $cus->name= $request->fullname;
-        $cus->email=$request->email;
-        $cus->phone=$request->numphone;
-        $cus->address=$request->address;
-        $cus->city=$request->city;
-        $cus->zipcode=$request->zip;
-        $cus->notes=$request->note;
-        $cus->save();
 
-        $bill = new Order();
-        $bill->customer_id= $cus->id;
-        $promo= Promotion::where('code',$request->promote_code)->first();
-        if(!$promo){
-            $bill->promo_value = 1;
-        }
-        else {
-            $bill->promo_value=$promo->value;
-        }
-        // kiem tra xem code giam gia cos ton tai trong trong bang promotions k
-        $idUser = Auth::user()->id;
-        $carts=Cart::where('user_id',$idUser)->get();
-        foreach($carts as $item){
-            $bill->total+=$item->quantity;
-            $pro=Product::find($item->product_id);
-            $bill->total_price+=$pro->new_price*$item->quantity;
-        }
-        $carts = Cart::where('user_id',$idUser)->get();
-        $products= json_encode($carts);
-        $bill->products=$products;
-        $bill->payment= $request->payment;
-        $bill->save();
-        DB::table("carts")->where('user_id',$idUser)->delete();
-        return redirect("home");
-    }
+
+
+    
+   
 
 }
