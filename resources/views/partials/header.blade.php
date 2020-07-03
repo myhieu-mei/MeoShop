@@ -24,12 +24,12 @@
             aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#" style="font-size: 18px;">MeoMeo</a>
+        <a class="navbar-brand" href="/home" style="font-size: 18px;">MeoMeo</a>
 
         <div class="collapse navbar-collapse menu" id="navbarTogglerDemo03">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">HOME <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/home">HOME <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">NEWS</a>
@@ -43,16 +43,16 @@
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         WOMEN FASHION
                     </a>
-                   
+
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    @foreach($categories as $cate)
-                <form action="/home" method="post">
-                    @csrf
-                    <button class="dropdown-item" type="submit" name="cate" value="{{$cate->id}}">{{$cate->name}}</button>
-                </form>
-                @endforeach
-            </div>
-                 
+                        @foreach($categories as $cate)
+                        <form action="/home/{{$cate->id}}" method="post">
+                            @csrf
+                            <button class="dropdown-item" type="submit" >{{$cate->name}}</button>
+                        </form>
+                        @endforeach
+                    </div>
+
 
                 </li>
 
@@ -66,8 +66,8 @@
 
             </ul>
             <div style="margin-top: 20px; margin-left: 10px; display: flex; ">
-                <form  action="/home" method="post" class="form-inline my-2 my-lg-0">
-                @csrf
+                <form action="/home" method="post" class="form-inline my-2 my-lg-0">
+                    @csrf
                     <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
                         style="font-size:18px;" name="search_txt">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit"

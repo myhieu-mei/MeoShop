@@ -16,7 +16,12 @@ class LoginController extends Controller
 	function index(){
 		return view("auth.login");
 	}
-    function login(loginRequest $request){
+    function login(Request $request){
+      $request->validate([
+        'username' => 'required|max:255',
+        'password' => 'required',
+      
+    ]);
     $username=$request->username;
     $password=$request->password;
       if(Auth::attempt(["username"=>$username,"password"=>$password])){
@@ -28,6 +33,9 @@ class LoginController extends Controller
        else{
         return redirect('/home');
         }
+       }
+       else {
+        return redirect()->route("auth.login",["error"=>"Invalid username or password!"]);
        }
 }
 }

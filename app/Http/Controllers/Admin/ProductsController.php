@@ -21,13 +21,15 @@ class ProductsController extends Controller
         $products=Product:: all();
         return view("admin.products.index",["products" => $products]);
     }
-       public function store(addProductRequest $request){
+
+    
+       public function store(Request $request){
         $request->validate([
             'title' => 'required|max:255',
             'image' => 'required',
             'category' => 'required',
-            'oldprice' => 'required',
-            'newprice' => 'required',
+            'old_price' => 'required',
+            'new_price' => 'required',
             'description' => 'required'
         ]);
         $image= $request->file("image")-> store("public");
@@ -41,8 +43,8 @@ class ProductsController extends Controller
         $product->title= $title;
         $product->category_id= $category_id;
         $product->image= 'storage/'.$image;
-        $product->oldprice= $oldprice;
-        $product->newprice= $newprice;
+        $product->old_price= $oldprice;
+        $product->new_price= $newprice;
         $product->description= $description;
         $product->save(); 
          return redirect("admin/dashboard");

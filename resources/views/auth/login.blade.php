@@ -19,9 +19,11 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-    <style>
-
-
+        <style>
+body {
+        background-image: url(../images/403.png);
+       
+    }
     </style>
 </head>
 
@@ -35,19 +37,26 @@
 EEEEEE;">
         <form class="form-horizontal" action="/auth/login" method="POST">
             @csrf
+            <p style="color:red">{{Request::get('error')}}</p>
             <div class="form-group">
                 <label class="control-label col-sm-2">Username:</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" name="username" placeholder="Enter username"
-                        value={{ old( 'username' ) }}>
+                      >
                 </div>
             </div>
+            @error('username')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <div class="form-group">
                 <label class="control-label col-sm-2">Password:</label>
                 <div class="col-sm-10">
                     <input type="password" class="form-control" name="password" placeholder="Enter password">
                 </div>
             </div>
+            @error('password')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <div class="checkbox">
@@ -61,21 +70,6 @@ EEEEEE;">
                     <button type="submit" class="btn btn-default">Submit</button>
                 </div>
             </div>
-            @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
-          
-
-            @error('username')
-            <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-
         </form>
     </div>
 

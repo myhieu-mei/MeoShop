@@ -23,7 +23,7 @@
 
                                     <div class="display-flex align-center">
                                         <div class="img-product">
-                                            <img src="/{{$cart->product->image}}">
+                                            <img src="/{{$cart->product->image}}" >
                                         </div>
                                         <div class="name-product">
                                             {{$cart->product->title}}

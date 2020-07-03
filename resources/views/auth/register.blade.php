@@ -17,7 +17,12 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 </head>
-
+<style>
+body {
+        background-image: url(../images/403.png);
+       
+    }
+    </style>
 <body>
     <!--====================Đăng kí======================-->
 
@@ -27,7 +32,7 @@
     </div>
     <div style="width:500px; margin: 50px auto auto auto; border: solid 1px; padding: 10px 10px 10px 10px; background-color: #
 EEEEEE;">
-        <form class="form-horizontal" action="" method="POST">
+        <form class="form-horizontal" action="/auth/register" method="POST">
             @csrf
             <div class="form-group">
                 <label class="control-label col-sm-2">Full name:</label>
@@ -35,31 +40,45 @@ EEEEEE;">
                     <input type="text" class="form-control" name="fullname" placeholder="Enter your name">
                 </div>
             </div>
+            @error('fullname')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <div class="form-group">
                 <label class="control-label col-sm-2">Username:</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" name="username" placeholder="Enter username">
                 </div>
             </div>
+            @error('username')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <div class="form-group">
                 <label class="control-label col-sm-2">Password:</label>
                 <div class="col-sm-10">
                     <input type="password" class="form-control" name="password" placeholder="Enter password">
                 </div>
             </div>
+            @error('password')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <div class="form-group">
                 <label class="control-label col-sm-2">Birthday:</label>
                 <div class="col-sm-10">
                     <input type="date" class="form-control" name="birthday" placeholder="Enter your birthday">
                 </div>
             </div>
+            @error('birthday')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <div class="form-group">
                 <label class="control-label col-sm-2">Number phone:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="password" placeholder="Enter your phone">
+                    <input type="text" class="form-control" name="numphone" placeholder="Enter your phone">
                 </div>
             </div>
-
+            @error('birthday')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button type="submit" name="register" class="btn btn-default">Submit</button>

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\User;
-use App\Http\Requests\registerRequest;
+
 
 class RegisterController extends Controller
 {
@@ -18,9 +18,16 @@ class RegisterController extends Controller
 
         return view("auth.register",['users'=> $users]);
     }
-	function register(registerRequest $request){
+	function register(Request $request){
 
-
+        $request->validate([
+            'username' => 'required|unique:users|max:255',
+            'password' => 'required',
+            'fullname' => 'required',
+            'birthday' => 'required',
+            'numphone' => 'required'
+           
+        ]);
         $username= $request->username;
         $password=$request->password;
         $hashPassword=Hash::make($password);
@@ -33,11 +40,10 @@ class RegisterController extends Controller
         
         $users->name=$fullname;
         $users->username=$username;
-        $users->password=$hashedPassword;
-        $users->birthday=$name;
-        $users->numphone=$name;
+        $users->password=$hashPassword;
+        $users->birthday=$birthday;
+        $users->numphone=$numphone;
         $users->role='user';
-
         $users->save();
     
         return redirect("auth/login");

@@ -38,6 +38,7 @@
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-product" role="tabpanel"
                             aria-labelledby="nav-product-tab">
+                            <a href="/admin/products/create"><button class="btn btn-danger" style="font-size: 18px;">Add Product</button></a>
                             <table class="table" cellspacing="0">
                                 <tr>
                                     <th>ID</th>

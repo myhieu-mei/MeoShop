@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Product;
 use App\Category;
+
 use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
@@ -86,8 +87,6 @@ class HomeController extends Controller
 
         // loi 
         $txt = $request->search_txt;
-        echo $txt;
-
         $products = DB::table('products')->where('title','LIKE','%'.$txt.'%')->get();
         $categories= Category::all();
         $page = $request->page;

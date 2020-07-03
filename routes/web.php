@@ -57,7 +57,6 @@ Route::PATCH('/admin/users/{id}', 'Admin\UsersController@update');
 
 // PRODUCT
 Route::get('/admin/products/create', 'Admin\ProductsController@create');
-Route::get('/admin/products', 'Admin\ProductsController@index');
 Route::post('/admin/products', 'Admin\ProductsController@store');
 Route::delete('/admin/products/{id}', 'Admin\ProductsController@destroy');
 Route::get('/admin/products/{id}/edit', 'Admin\ProductsController@edit');
